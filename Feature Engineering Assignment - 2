@@ -1,0 +1,238 @@
+Q1. What is Min-Max scaling, and how is it used in data preprocessing? Provide an example to illustrate its application.
+Ans: MinMax Scaler shrinks the data within the given range, usually of 0 to 1. It transforms data by scaling features to a given range. It scales the values to a specific value range without changing the shape of the original distribution.
+
+# Example
+
+# import module
+from sklearn.preprocessing import MinMaxScaler
+ 
+# create data
+data = [[11, 2], [3, 7], [0, 10], [11, 8]]
+ 
+# scale features
+scaler = MinMaxScaler()
+model=scaler.fit(data)
+scaled_data=model.transform(data)
+ 
+# print scaled features
+print(scaled_data)
+[[1.         0.        ]
+ [0.27272727 0.625     ]
+ [0.         1.        ]
+ [1.         0.75      ]]
+Q2. What is the Unit Vector technique in feature scaling, and how does it differ from Min-Max scaling? Provide an example to illustrate its application.
+Ans: The Unit Vector technique in feature scaling, also known as vector normalization or L2 normalization, is a method used to scale numerical features in a dataset to have a unit norm (i.e., a length of 1) along each feature dimension. It is commonly applied in machine learning algorithms and data preprocessing to ensure that all features are on a comparable scale, which can be particularly useful for algorithms sensitive to the magnitude of features.
+
+Unit Vector scaling ensures that each feature vector has a unit L2 norm, while Min-Max scaling scales the features to a predefined range. The choice between these scaling methods depends on the specific requirements of the machine learning algorithm and the characteristics of the data being used.
+
+# Example
+
+# import module
+from sklearn.preprocessing import normalize
+ 
+# create data
+data = [[11, 2], [3, 7], [0, 10], [11, 8]]
+ 
+# scale features
+scaled_data = normalize(data)
+ 
+# print scaled features
+print(scaled_data)
+[[0.98386991 0.17888544]
+ [0.3939193  0.91914503]
+ [0.         1.        ]
+ [0.80873608 0.5881717 ]]
+Q3. What is PCA (Principle Component Analysis), and how is it used in dimensionality reduction? Provide an example to illustrate its application.
+Ans: PCA (Principal Component Analysis) is a widely used technique in the field of dimensionality reduction and data analysis. It is a mathematical procedure that transforms a high-dimensional dataset into a new coordinate system, in which the new axes (principal components) are orthogonal (uncorrelated) and ordered by the amount of variance they explain in the data.
+
+PCA is used in dimensionality reduction to simplify high-dimensional data by transforming it into a lower-dimensional space. It retains the most significant information while discarding less important aspects. This reduction aids in data visualization, computational efficiency, and noise reduction. By selecting the most relevant principal components, PCA creates a compressed representation of the original data, making it easier to analyze and process.
+
+# Example
+
+from sklearn.decomposition import PCA
+pca = PCA(n_components=1)
+pca.fit_transform(scaled_data)
+array([[ 0.65147725],
+       [-0.27599663],
+       [-0.63001678],
+       [ 0.25453616]])
+Q4. What is the relationship between PCA and Feature Extraction, and how can PCA be used for Feature Extraction? Provide an example to illustrate this concept.
+Ans: PCA is a specific technique used for feature extraction. Feature extraction aims to reduce the number of features in a dataset while retaining the most important information. PCA achieves this by transforming the original features into a new set of uncorrelated features called principal components. These principal components are linear combinations of the original features and are ordered by the amount of variance they explain in the data. By selecting a subset of the top principal components, PCA effectively performs feature extraction.
+
+PCA is applied to a dataset with multiple features to derive a reduced set of principal components. These principal components serve as the new features that capture the most significant patterns and variation in the data. The number of principal components chosen determines the dimensionality of the reduced feature space.
+
+import numpy as np
+from sklearn.decomposition import PCA
+
+# Example dataset with three features (age, income, education level)
+data = np.array([
+    [30, 50000, 12],
+    [25, 30000, 10],
+    [35, 70000, 14],
+    [40, 80000, 16],
+    [28, 40000, 11]
+])
+
+# Step 1: Standardize the data (important for PCA)
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data)
+
+# Step 2: Apply PCA for feature extraction
+num_components = 2  # Set the desired number of components
+pca = PCA(n_components=num_components)
+principal_components = pca.fit_transform(data_scaled)
+
+# Print the results
+print("Original Data:")
+print(data)
+
+print("\nScaled Data:")
+print(data_scaled)
+
+print("\nPrincipal Components:")
+print(principal_components)
+Original Data:
+[[   30 50000    12]
+ [   25 30000    10]
+ [   35 70000    14]
+ [   40 80000    16]
+ [   28 40000    11]]
+
+Scaled Data:
+[[-0.30108397 -0.21566555 -0.27854301]
+ [-1.24197138 -1.29399328 -1.2070197 ]
+ [ 0.63980344  0.86266219  0.64993368]
+ [ 1.58069085  1.40182605  1.57841037]
+ [-0.67743894 -0.75482941 -0.74278135]]
+
+Principal Components:
+[[-0.45924307  0.06060353]
+ [-2.16092973 -0.0584588 ]
+ [ 1.24244359  0.17966586]
+ [ 2.63344937 -0.1414239 ]
+ [-1.25572015 -0.04038668]]
+Q5. You are working on a project to build a recommendation system for a food delivery service. The dataset contains features such as price, rating, and delivery time. Explain how you would use Min-Max scaling to preprocess the data.
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+
+# Example dataset with features: price, rating, and delivery time
+data = np.array([
+    [10.0, 4.5, 30],
+    [15.0, 4.2, 25],
+    [8.0, 4.8, 35],
+    [20.0, 4.0, 40],
+    [12.0, 4.7, 28]
+])
+
+# Step 1: Create a Min-Max scaler
+scaler = MinMaxScaler()
+
+# Step 2: Fit and transform the data with Min-Max scaling
+data_scaled = scaler.fit_transform(data)
+
+# Print the scaled data
+print("Original Data:")
+print(data)
+
+print("\nScaled Data:")
+print(data_scaled)
+Original Data:
+[[10.   4.5 30. ]
+ [15.   4.2 25. ]
+ [ 8.   4.8 35. ]
+ [20.   4.  40. ]
+ [12.   4.7 28. ]]
+
+Scaled Data:
+[[0.16666667 0.625      0.33333333]
+ [0.58333333 0.25       0.        ]
+ [0.         1.         0.66666667]
+ [1.         0.         1.        ]
+ [0.33333333 0.875      0.2       ]]
+Q6. You are working on a project to build a model to predict stock prices. The dataset contains many features, such as company financial data and market trends. Explain how you would use PCA to reduce the dimensionality of the dataset.
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+# Example dataset with multiple features (company financial data and market trends)
+data = np.array([
+    [100, 50, 10, 0.5, 5000],
+    [150, 60, 12, 0.6, 6000],
+    [80, 40, 8, 0.4, 4000],
+    [120, 55, 11, 0.55, 5500],
+    [90, 45, 9, 0.45, 4500]
+])
+
+# Step 1: Standardize the data
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data)
+
+# Step 2: Apply PCA for dimensionality reduction
+num_components = 3  # Set the desired number of components
+pca = PCA(n_components=num_components)
+principal_components = pca.fit_transform(data_scaled)
+
+# Print the results
+print("Original Data:")
+print(data)
+
+print("\nScaled Data:")
+print(data_scaled)
+
+print("\nPrincipal Components:")
+print(principal_components)
+Original Data:
+[[1.0e+02 5.0e+01 1.0e+01 5.0e-01 5.0e+03]
+ [1.5e+02 6.0e+01 1.2e+01 6.0e-01 6.0e+03]
+ [8.0e+01 4.0e+01 8.0e+00 4.0e-01 4.0e+03]
+ [1.2e+02 5.5e+01 1.1e+01 5.5e-01 5.5e+03]
+ [9.0e+01 4.5e+01 9.0e+00 4.5e-01 4.5e+03]]
+
+Scaled Data:
+[[-0.32232919  0.          0.          0.          0.        ]
+ [ 1.69222822  1.41421356  1.41421356  1.41421356  1.41421356]
+ [-1.12815215 -1.41421356 -1.41421356 -1.41421356 -1.41421356]
+ [ 0.48349378  0.70710678  0.70710678  0.70710678  0.70710678]
+ [-0.72524067 -0.70710678 -0.70710678 -0.70710678 -0.70710678]]
+
+Principal Components:
+[[-1.41933436e-01  2.89397656e-01 -3.38685200e-16]
+ [ 3.28460467e+00 -2.73876846e-01 -1.52180646e-16]
+ [-3.03622116e+00 -2.32569053e-01  6.98831785e-17]
+ [ 1.48262722e+00  1.88633940e-01  3.92577191e-16]
+ [-1.58907730e+00  2.84143018e-02 -5.15504581e-17]]
+Q7. For a dataset containing the following values: [1, 5, 10, 15, 20], perform Min-Max scaling to transform the values to a range of -1 to 1.
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+
+# Given dataset
+data = np.array([1, 5, 10, 15, 20]).reshape(-1, 1)
+
+# Create a MinMaxScaler object
+scaler = MinMaxScaler(feature_range=(-1, 1))
+
+# Perform Min-Max scaling
+scaled_data = scaler.fit_transform(data)
+
+# Print the scaled data
+print("Original Data:")
+print(data)
+
+print("\nScaled Data:")
+print(scaled_data)
+Original Data:
+[[ 1]
+ [ 5]
+ [10]
+ [15]
+ [20]]
+
+Scaled Data:
+[[-1.        ]
+ [-0.57894737]
+ [-0.05263158]
+ [ 0.47368421]
+ [ 1.        ]]
+
+ 
